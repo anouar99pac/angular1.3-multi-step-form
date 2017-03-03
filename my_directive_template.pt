@@ -1,0 +1,137 @@
+<form class="form-horizontal">
+  <style>
+    .circle
+    {
+    display: inline-block;
+    width:30px;
+    height:30px;
+    border-radius:20px;
+    font-size:15px;
+    color:#fff;
+    line-height:26px;
+    text-align:center;
+    background:#7E204D;
+    font-weight:bolder;
+    }
+  </style>
+  <ul class="nav nav-tabs">
+    <li ng-repeat="step in indexStep" ng-class="{active: $index==getCurrentStepIndex()}">
+      <a href="javascript:void(0)" > <div class="circle"> {{indexStep.indexOf(step)+1}} </div> {{step}}</a>
+    </li>
+  </ul>
+</form>
+
+<div ng-controller="makerControllerData" class="form" style="margin-left:32px;">
+  
+  <div class="form" ng-switch on="selection">
+  <form>
+  <!-- First Step -->
+  <div  ng-switch-when="Step 1 Definition">
+    <div class="row">
+      <br/>
+      <br/>
+      <label style="margin-left:inherit;"> Catégorie du message: {{message_data.category_name}} </label>
+      <br/><br/>
+     
+      <!-- show our formData as it is being typed -->
+      <div class="row">
+        <label style="font-size:initial;"> Pattern </label>
+        <div style="display:inline-flex;">
+          <pre style="height:150px;width:92%;background-color: #ebf2f9;overflow:hidden; ">
+                  <table style="table-layout:fixed;width:100%;">
+                    <tbody class="tbody_pattern">
+                        <tr>
+                          <td class="td_show_pattern" ng-repeat="elem in message_data.pattern_splitted">
+                            <p style="font-size:medium;padding-bottom:180%;" ng-if="elem.type=='variable'">{ {{elem.value}} }
+                            <p style="font-size:medium;padding-bottom:180%;" ng-if="elem.type=='fixed'">[ {{elem.value}} ]
+                            </p>
+                          </td>
+                        </tr>
+                    </tbody>
+                  </table>
+          </pre>
+          &nbsp;&nbsp;
+          <button type="button" class="glyphicon btn btn-warning" style="height: 45px;font-weight: bold;" ng-click="checkPattern()" ng-disabled="message_data.pattern_splitted.length == 1 && message_data.pattern_splitted[0].value == 0"> Check Pattern</button>
+        </div>
+      </div>
+      <br/>
+      <div>
+        <div class="row">
+          <ul class="class_ul"  data-ng-model="message_data.pattern_splitted">
+            <li class="class_li" ng-repeat="attr in message_data.pattern_splitted" >
+              <div class="row-md-4" style="width:120%;">
+                <span ng-disabled="$index == message_data.pattern_splitted.length-1" class="glyphicon glyphicon-arrow-down btn" ng-click="changeElemPatternDown($index)" popover-trigger="mouseenter" ></span>
+                <span ng-disabled="$index == 0" class="glyphicon glyphicon-arrow-up btn" ng-click="changeElemPatternUp($index)" popover-trigger="mouseenter" ></span>
+
+                <select name="choose_type_val" ng-model="attr.type" class="btn btn-default" ng-change="changePatternColumn($index, new_value)">
+                   <option value="fixed">Valeur fixe</option>
+                   <option value="variable">Valeur variable</option>
+                </select>
+                <input class="input_value" type="text" ng-model="attr.value" ng-change="requiredCheckPattern()" placeholder="nom de la valeur"/>
+                  <div class="minus_plus">
+                    <!-- supprimer la ligne-->
+                    <span ng-if="$index != 0" class="glyphicon glyphicon-minus btn btn-danger" ng-click="removeElemPattern($index)" popover-trigger="mouseenter" popover-placement="top"  uib-popover="supprimer la valeur"></span>
+                    <!-- ajouter une ligne-->
+                    <span  ng-if="$index == message_data.pattern_splitted.length-1" class="glyphicon glyphicon-plus btn btn-success" ng-click="addElemPattern()" popover-trigger="mouseenter" popover-placement="top" uib-popover="ajouter une valeur"></span>
+                  </div>
+
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+    <!-- Second Step -->
+  <div ng-switch-when="Step 2 Translation">
+    <br/>
+    <div class="row">
+      <label class="col-md-1" for="inputLabelFr">FR</label>
+      <span class="col-md-5">
+        <input class="form-control" type="text" id="inputLabelFr" ng-value="message_data.translation.fr" ng-model="message_data.translation.fr" placeholder="Saisir un label en français" />
+      </span>
+      <span class="col-md-2">
+          <select name="add_val_var_fr"  class="form-control btn-default selectpicker" ng-model="val_var_fr" ng-change="addPartVariable('fr',val_var_fr)" style="margin-left:8px;" title="Ajouter une valeur variable">
+            <option ng-repeat="elem in message_data.pattern_splitted" ng-if="elem.type == 'variable'" ng-value="elem.value">{{elem.value}}</option>
+          </select>
+      </span>
+    </div>
+    <br/>
+    <div class="row">
+      <label class="col-md-1" for="inputLabelEn">EN</label>
+      <span class="col-md-5">
+        <input class="form-control" type="text" id="inputLabelEn" ng-value="message_data.translation.en" ng-model="message_data.translation.en" placeholder="Saisir un label en anglais" />
+      </span>
+      <span class="col-md-2">
+        <select name="add_val_var_fr" ng-model="value_var_en"  ng-change="addPartVariable('en',value_var_en)" class="form-control btn-default" style="margin-left:8px;" title="Ajouter une valeur variable">
+          <option ng-repeat="elem2 in message_data.pattern_splitted" ng-if="elem2.type == 'variable'" ng-value="elem2.value">{{elem2.value}}</option>
+        </select>
+      </span>
+    </div>
+  </div>
+  <!-- Third Step -->
+  
+  <div ng-switch-when="Step 3 Infos">
+        TODO
+</form>
+</div>
+
+
+
+<br/>
+<div class="clearfix"></div>
+  <ul class="pager">
+    <li class="pull-left" ng-show="hasPreviousStep()">
+      <button type="button" class="btn" style="background-color:#ffe5e5;font-weight:500;" ng-click="decrementStep()"> &larr; Précédent</button>
+    </li>
+    <li class="" ng-show="hasNextStep()">
+      <button type="button"  class="btn" style="background-color:#b3ffb3;font-weight:500;" ng-click="incrementStep()"> Suivant &rarr;</button>
+    </li>
+    <div class="" ng-show="!hasNextStep()">
+      <button 
+      ng-click="validationForm(message_data)" class="btn btn-success">Valider</button>
+    </div>
+  </ul>
+  <div class="clearfix"></div>
+
+</div>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<!-- 
+    lang="${request.locale_name}"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:tal="http://xml.zope.org/namespaces/tal"
+    xmlns:metal="http://xml.zope.org/namespaces/metal"
+    metal:use-macro="base"
+    xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+    i18n:domain="neteven_international"
+  -->
+
+<head>
+  <meta charset="utf-8" />
+  <title>AngularJS Plunker</title>
+  <link data-require="bootstrap-css@3.3.6" data-semver="3.3.6" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.css" />
+  <script>
+    document.write('<base href="' + document.location + '" />');
+  </script>
+  <link rel="stylesheet" href="style.css" />
+  <script data-require="angular.js@1.3.x" src="https://code.angularjs.org/1.3.20/angular.js" data-semver="1.3.20"></script>
+  <script data-require="jquery@2.2.0" data-semver="2.2.0" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+  <script type="text/javascript" src="my_directive.js"></script>
+  <script type="text/javascript" src="app.js"></script>
+  <script type="text/javascript" src="ui-bootstrap-tpls-0.14.3.min.js"></script>
+
+
+</head>
+
+<body ng-app="myForm">
+
+
+  <div class="content" ng-controller="MainCtrl">
+    Hello in my {{name}}
+
+
+    <br/>
+    <br/> My Directive is here
+    <br/>
+    <multi-step-form class="form" index-step="steps" to-next="$root.to_next">
+    <multi-step-form>
+  </div>
+
+</body>
+
+</html>

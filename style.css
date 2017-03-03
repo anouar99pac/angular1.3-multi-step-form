@@ -1,0 +1,47 @@
+/* Put your css in here */
+
+@charset "UTF-8";
+
+.minus_plus {
+    display:inline-block;
+}
+
+.input_value{
+	width:40%;
+	padding-top: 4px;
+  padding-bottom: 7px;
+  padding-left: 6px;
+  margin-left: 12px;
+
+}
+
+.input_label{
+	width:45%;
+	padding-top: 4px;
+  padding-bottom: 7px;
+  padding-left: 6px;
+  margin-left: 12px;
+}
+
+.class_ul{
+	width:72%;
+	margin-left: -51px;
+}
+
+.class_li{
+	border: darkgrey;
+  background-color:whitesmoke;;
+}
+
+.td_show_pattern {
+    padding-right: 0px;
+    white-space: normal;
+    border: 1px;
+    border-style: dashed;
+    border-color: darkseagreen;
+}
+
+.tbody_pattern {
+    display: inline-grid;
+    height:40px;
+}
